@@ -1,0 +1,16 @@
+language_code,language,treebank,split,sentences,tokens
+fr,French,Sequoia,train,2231,49142
+fr,French,Sequoia,dev,412,9717
+fr,French,Sequoia,test,456,9734
+it,Italian,ISDT,train,13121,257612
+it,Italian,ISDT,dev,564,11132
+it,Italian,ISDT,test,482,9680
+de,German,GSD,train,13813,259167
+de,German,GSD,dev,799,12316
+de,German,GSD,test,977,16225
+tr,Turkish,IMST,train,3435,36415
+tr,Turkish,IMST,dev,1100,10257
+tr,Turkish,IMST,test,1100,9750
+sr,Serbian,SET,train,3328,74259
+sr,Serbian,SET,dev,536,11993
+sr,Serbian,SET,test,520,11421
