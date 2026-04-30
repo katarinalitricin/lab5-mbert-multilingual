@@ -33,3 +33,4 @@ data/processed/
 !notebooks/.gitkeep
 !results/.gitkeep
 !report/.gitkeep
+external/
