@@ -87,3 +87,92 @@ def build_datasets_from_paths(
     test_dataset = corpus_to_dataset(test_corpus, tokenizer, label2id)
 
     return train_dataset, dev_dataset, test_dataset, label_list, label2id, id2label
+
+
+from src.config import LANGUAGES
+
+
+def build_all_language_datasets(model_checkpoint: str = MODEL_CHECKPOINT):
+    """
+    Build HuggingFace datasets for all languages using one shared label mapping.
+
+    This is important for cross-lingual evaluation because the same integer label ID
+    must mean the same PoS tag in every language.
+    """
+    tokenizer = AutoTokenizer.from_pretrained(model_checkpoint)
+
+    corpora = {}
+
+    # First load all corpora.
+    for lang_code, info in LANGUAGES.items():
+        corpora[lang_code] = {
+            "train": load_normalized_conllu(info["train"]),
+            "dev": load_normalized_conllu(info["dev"]),
+            "test": load_normalized_conllu(info["test"]),
+        }
+
+    # Build one global label mapping from all languages and all splits.
+    all_corpora = []
+    for lang_code in LANGUAGES:
+        for split in ["train", "dev", "test"]:
+            all_corpora.append(corpora[lang_code][split])
+
+    label_list, label2id, id2label = build_label_mappings(all_corpora)
+
+    # Convert each corpus to a HuggingFace Dataset.
+    datasets = {}
+
+    for lang_code in LANGUAGES:
+        datasets[lang_code] = {}
+
+        for split in ["train", "dev", "test"]:
+            datasets[lang_code][split] = corpus_to_dataset(
+                corpora[lang_code][split],
+                tokenizer,
+                label2id,
+            )
+
+    return datasets, label_list, label2id, id2label
+
+
+from src.config import LANGUAGES
+
+
+def build_all_language_datasets(model_checkpoint: str = MODEL_CHECKPOINT):
+    """
+    Build HuggingFace datasets for all languages using one shared label mapping.
+
+    This is important for cross-lingual evaluation because the same integer label ID
+    must mean the same PoS tag in every language.
+    """
+    tokenizer = AutoTokenizer.from_pretrained(model_checkpoint)
+
+    corpora = {}
+
+    for lang_code, info in LANGUAGES.items():
+        corpora[lang_code] = {
+            "train": load_normalized_conllu(info["train"]),
+            "dev": load_normalized_conllu(info["dev"]),
+            "test": load_normalized_conllu(info["test"]),
+        }
+
+    all_corpora = []
+    for lang_code in LANGUAGES:
+        for split in ["train", "dev", "test"]:
+            all_corpora.append(corpora[lang_code][split])
+
+    label_list, label2id, id2label = build_label_mappings(all_corpora)
+
+    datasets = {}
+
+    for lang_code in LANGUAGES:
+        datasets[lang_code] = {}
+
+        for split in ["train", "dev", "test"]:
+            datasets[lang_code][split] = corpus_to_dataset(
+                corpora[lang_code][split],
+                tokenizer,
+                label2id,
+            )
+
+    return datasets, label_list, label2id, id2label
