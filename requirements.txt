@@ -1,0 +1,12 @@
+torch
+transformers
+datasets
+conllu
+numpy
+pandas
+scikit-learn
+matplotlib
+tqdm
+accelerate
+jupyter
+ipykernel

@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+env/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+
+# HuggingFace / training outputs
+outputs/
+checkpoints/
+models/
+logs/
+runs/
+wandb/
+.cache/
+
+# Large model files
+*.bin
+*.safetensors
+*.pt
+*.ckpt
+
+# Generated data
+data/processed/
+
+# Keep empty folders
+!notebooks/.gitkeep
+!results/.gitkeep
+!report/.gitkeep
